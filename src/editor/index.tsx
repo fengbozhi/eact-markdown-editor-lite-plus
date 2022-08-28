@@ -163,7 +163,7 @@ class Editor extends React.Component<EditorProps, EditorState> {
     this.renderHTML(text);
     globalEmitter.on(globalEmitter.EVENT_LANG_CHANGE, this.handleLocaleUpdate);
     // init i18n
-    i18n.setUp();
+    // i18n.setUp();
   }
 
   componentWillUnmount() {

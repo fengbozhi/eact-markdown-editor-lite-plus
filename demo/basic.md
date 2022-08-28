@@ -9,7 +9,7 @@ order: 1
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ReactMarkdown from 'react-markdown';
-import MdEditor, { Plugins } from 'react-markdown-editor-lite';
+import MdEditor, { Plugins } from 'react-markdown-editor-lite-plus';
 
 const PLUGINS = undefined;
 // const PLUGINS = ['header', 'divider', 'image', 'divider', 'font-bold', 'full-screen'];
@@ -30,7 +30,7 @@ class Demo extends React.Component {
     super(props);
     this.renderHTML = this.renderHTML.bind(this);
     this.state = {
-      value: "# Hello",
+      value: '# Hello',
     };
   }
 
@@ -41,7 +41,7 @@ class Demo extends React.Component {
     });
   };
 
-  handleImageUpload = (file) => {
+  handleImageUpload = file => {
     return new Promise(resolve => {
       const reader = new FileReader();
       reader.onload = data => {
@@ -51,7 +51,7 @@ class Demo extends React.Component {
     });
   };
 
-  onCustomImageUpload = (event) => {
+  onCustomImageUpload = event => {
     console.log('onCustomImageUpload', event);
     return new Promise((resolve, reject) => {
       const result = window.prompt('Please enter image url here...');
@@ -94,6 +94,8 @@ class Demo extends React.Component {
   }
 
   render() {
+    MdEditor.useLocale('enUS');
+
     return (
       <div className="demo-wrap">
         <h3>react-markdown-editor-lite demo</h3>
@@ -130,10 +132,7 @@ class Demo extends React.Component {
             onBlur={e => console.log('blur', e)}
             // onCustomImageUpload={this.onCustomImageUpload}
           />
-          <MdEditor
-            style={{ height: '500px', width: '100%' }}
-            renderHTML={this.renderHTML}
-          />
+          <MdEditor style={{ height: '500px', width: '100%' }} renderHTML={this.renderHTML} />
         </div>
         {/* <div style={{marginTop: '30px'}}>
           <MdEditor
@@ -147,15 +146,13 @@ class Demo extends React.Component {
               },
               imageUrl: 'https://octodex.github.com/images/minion.png'
             }}
-            onChange={this.handleEditorChange} 
-          />  
+            onChange={this.handleEditorChange}
+          />
         </div> */}
       </div>
     );
   }
 }
 
-ReactDOM.render((
-  <Demo />
-), mountNode);
+ReactDOM.render(<Demo />, mountNode);
 ```

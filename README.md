@@ -1,11 +1,13 @@
-# react-markdown-editor-lite
+# react-markdown-editor-lite-plus
+
+来源 react-markdown-editor-lite，修复国际化，问题
 
 [![NPM package][npm-version-image]][npm-url]
 [![NPM downloads][npm-downloads-image]][npm-url]
 [![MIT License][license-image]][license-url]
 [![Workflow][workflow-image]][workflow-url]
 
-[中文说明](README_CN.md)
+[English Docs](README.md)
 
 - A light-weight(20KB zipped) Markdown editor of React component
 - Supports TypeScript
@@ -24,79 +26,76 @@
 - 支持图片上传或拖拽
 - 支持编辑区和预览区同步滚动
 
-## Demo
+## 案例
 
-Online demo <br>[https://harrychen0506.github.io/react-markdown-editor-lite/](https://harrychen0506.github.io/react-markdown-editor-lite/)
+在线案例 <br>[https://harrychen0506.github.io/react-markdown-editor-lite/](https://harrychen0506.github.io/react-markdown-editor-lite/)
 
-Default configuration
+默认配置
 
 ![image](https://github.com//HarryChen0506/react-markdown-editor-lite/blob/master/image/react-markdown-editor-lite-v1.0.0.PNG?raw=true)
 
-Pluggable bars
+可插拔的功能键
 
 ![image](https://github.com//HarryChen0506/react-markdown-editor-lite/blob/master/image/react-markdown-editor-lite-v1.0.0-plugins.PNG?raw=true)
 
-## Install
+## 安装
 
 ```shell
-npm install react-markdown-editor-lite --save
+npm install react-markdown-editor-lite-plus --save
 # or
-yarn add react-markdown-editor-lite
+yarn add react-markdown-editor-lite-plus
 ```
 
-## Basic usage
+## 基本使用
 
-Following steps:
+基本使用分为以下几步：
 
-- Import react-markdown-editor-lite
-- Register plugins if required
-- Initialize a markdown parser, such as markdown-it
-- Start usage
+- 导入 react-markdown-editor-lite-plus
+- 注册插件（如果需要）
+- 初始化任意 Markdown 解析器，例如 markdown-it
+- 开始使用
 
 ```js
-// import react, react-markdown-editor-lite, and a markdown parser you like
+// 导入React、react-markdown-editor-lite，以及一个你喜欢的Markdown渲染器
 import React from 'react';
-import * as ReactDOM from 'react-dom';
 import MarkdownIt from 'markdown-it';
-import MdEditor from 'react-markdown-editor-lite';
-// import style manually
-import 'react-markdown-editor-lite/lib/index.css';
+import MdEditor from 'react-markdown-editor-lite-plus';
+// 导入编辑器的样式
+import 'react-markdown-editor-lite-plus/lib/index.css';
 
-// Register plugins if required
+// 注册插件（如果有的话）
 // MdEditor.use(YOUR_PLUGINS_HERE);
 
-// Initialize a markdown parser
+// 初始化Markdown解析器
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-// Finish!
+// 完成！
 function handleEditorChange({ html, text }) {
   console.log('handleEditorChange', html, text);
 }
 export default props => {
-  return (
-    <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />
-  );
+  return <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />;
 };
 ```
 
-- Props and configurations see [here](./docs/configure.md)
-- APIs see [here](./docs/api.md)
-- Plugins developer see [here](./docs/plugin.md)
-- Full demo see [src/demo/index.tsx](https://github.com/HarryChen0506/react-markdown-editor-lite/blob/master/src/demo/index.tsx)
+- 更多参数和配置：点击[这里](./docs/configure.zh-CN.md)查看
+- API：点击[这里](./docs/api.zh-CN.md)查看
+- 插件开发：点击[这里](./docs/plugin.zh-CN.md)查看
+- 完整 Demo 见[src/demo/index.tsx](https://github.com/HarryChen0506/react-markdown-editor-lite/blob/master/src/demo/index.tsx)
 
-## Usage in server-side render
+## 在 SSR（服务端渲染）中使用
 
-If you are using a server-side render framework, like Next.js, Gatsby, please use client-side render for this editor.
+如果你在使用一个服务端渲染框架，例如 Next.js、Gatsby 等，请对编辑器使用客户端渲染。
 
-For example, Next.js has [next/dynamic](https://nextjs.org/docs/advanced-features/dynamic-import), Gatsby has [loadable-components](https://www.gatsbyjs.org/docs/using-client-side-only-packages/#workaround-3-load-client-side-dependent-components-with-loadable-components)
+例如，Next.js 有[next/dynamic](https://nextjs.org/docs/advanced-features/dynamic-import)，Gatsby 有[loadable-components](https://www.gatsbyjs.org/docs/using-client-side-only-packages/#workaround-3-load-client-side-dependent-components-with-loadable-components)
 
-Following is a example for Next.js:
+下面是 Next.js 的使用范例：
 
 ```js
 import dynamic from 'next/dynamic';
-import 'react-markdown-editor-lite/lib/index.css';
+import 'react-markdown-editor-lite-plus/lib/index.css';
 
-const MdEditor = dynamic(() => import('react-markdown-editor-lite'), {
+const MdEditor = dynamic(() => import('react-markdown-editor-lite-plus'), {
   ssr: false,
 });
 
@@ -105,19 +104,19 @@ export default function() {
 }
 ```
 
-With plugins:
+与插件一起使用：
 
 ```js
 import dynamic from 'next/dynamic';
-import 'react-markdown-editor-lite/lib/index.css';
+import 'react-markdown-editor-lite-plus/lib/index.css';
 
 const MdEditor = dynamic(
   () => {
     return new Promise(resolve => {
       Promise.all([
-        import('react-markdown-editor-lite'),
+        import('react-markdown-editor-lite-plus'),
         import('./my-plugin'),
-        /** Add more plugins, and use below */
+        /** 按照这样加载更多插件，并在下方 use */
       ]).then(res => {
         res[0].default.use(res[1].default);
         resolve(res[0].default);
@@ -134,40 +133,41 @@ export default function() {
 }
 ```
 
-Full example see [here](https://codesandbox.io/s/next-js-80bne)
+完整示例[见此](https://codesandbox.io/s/next-js-80bne)
 
-## Import in Browser
+## 浏览器引入
 
-Since 1.1.0, You can add `script` and `link` tags in your browser and use the global variable `ReactMarkdownEditorLite`.
+自 1.1.0 起，你可以在浏览器中使用`script`和`link`标签直接引入文件，并使用全局变量`ReactMarkdownEditorLite`。
 
-You can download these files directly from [![cdnjs][cdnjs-image]][cdnjs-url] [![jsdelivr][jsdelivr-image]][jsdelivr-url] [![unpkg][unpkg-image]][unpkg-url]
+你可以通过 [![cdnjs][cdnjs-image]][cdnjs-url] [![jsdelivr][jsdelivr-image]][jsdelivr-url] [![unpkg][unpkg-image]][unpkg-url] 进行下载。
 
-Note: you should import react before `ReactMarkdownEditorLite`.
+注意：ReactMarkdownEditorLite(RMEL) 依赖 react，请确保其在 RMEL 之前引入。
 
-For example, in webpack, you import ReactMarkdownEditorLite by `script` tag in your page, and write webpack config like this:
+例如，使用 webpack 时，你可以在页面中通过`script`引入 ReactMarkdownEditorLite 的 JS 文件，并在 webpack 配置中写：
 
 ```js
 externals: {
   react: 'React',
-  'react-markdown-editor-lite': 'ReactMarkdownEditorLite'
+  'react-markdown-editor-lite-plus': 'ReactMarkdownEditorLite'
 }
 ```
 
-## More demos
-* [Basic usage](https://codesandbox.io/s/rmel-demo-ref-in-function-component-u04gb)
-* [With unform](https://codesandbox.io/s/rmel-demo-with-unform-qx34y)
-* [Write a plugin](https://codesandbox.io/s/rmel-demo-write-plugin-p82fc)
-* [Replace default icons](https://codesandbox.io/s/rmel-demo-replace-icon-pl1n3)
-* [In Next.js](https://codesandbox.io/s/next-js-80bne)
+## 更多示例
 
-## Authors
+- [基本使用](https://codesandbox.io/s/rmel-demo-ref-in-function-component-u04gb)
+- [在 unform 中使用](https://codesandbox.io/s/rmel-demo-with-unform-qx34y)
+- [编写插件](https://codesandbox.io/s/rmel-demo-write-plugin-p82fc)
+- [替换默认图标](https://codesandbox.io/s/rmel-demo-replace-icon-pl1n3)
+- [在 Next.js 中使用](https://codesandbox.io/s/next-js-80bne)
+
+## 主要作者
 
 - ShuangYa [github/sylingd](https://github.com/sylingd)
 - HarryChen0506 [github/HarryChen0506](https://github.com/HarryChen0506)
 
 ## License
 
-[MIT](LICENSE)
+[MIT](https://github.com/HarryChen0506/react-markdown-editor-lite/blob/master/LICENSE)
 
 [npm-version-image]: https://img.shields.io/npm/v/react-markdown-editor-lite.svg
 [npm-downloads-image]: https://img.shields.io/npm/dm/react-markdown-editor-lite.svg?style=flat
